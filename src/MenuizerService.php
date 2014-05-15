@@ -21,9 +21,26 @@ class MenuizerService
         return new static(new HtmlGenerator, $itemFactory, new MenuRepository);
     }
 
-    public function menu($name, array $items)
+    public function define($name, array $items)
     {
-        return $this->repository->create($name, $items);
+        $menuItems = array();
+        foreach($items as $item) {
+            if($item instanceof MenuItem) {
+                $menuItems[] = $item;
+            } else {
+                $menuItems[] = $this->parser->makeFromRuleString($item);
+            }
+        }
+        return $this->repository->create($name, $menuItems);
+    }
+
+    public function menu($name, array $items = array())
+    {
+        if(count($items) > 0) {
+            return $this->define($name, $items);
+        } else {
+            return $this->repository->get($name);
+        }
     }
 
     public function render($name, $template = '')
