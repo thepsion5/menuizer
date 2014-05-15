@@ -11,14 +11,19 @@ class Menu implements \ArrayAccess
 
     protected $items = array();
 
+    protected $menuTemplate = '<ul>:menu</ul>';
+
     protected $itemTemplate = '<li><a href=":url" :attributes>:label</a></li>';
 
-    public function __construct($name, array $items = array(), $template = '')
+    public function __construct($name, array $items = array(), $template = '', $menuTemplate = '')
     {
         $this->setName($name);
         $this->setItems($items);
         if($template) {
             $this->setItemTemplate($template);
+        }
+        if($menuTemplate) {
+            $this->setMenuTemplate($menuTemplate);
         }
     }
 
@@ -60,6 +65,19 @@ class Menu implements \ArrayAccess
         return (isset($this->items[$index])) ? $this->items[$index] : null;
     }
 
+    public function setMenuTemplate($template)
+    {
+        if($template == '') {
+            throw new InvalidTemplateException('Templates Cannot be empty.');
+        }
+        $this->menuTemplate = $template;
+    }
+
+    public function getMenuTemplate()
+    {
+        return $this->menuTemplate;
+    }
+
     public function setItemTemplate($template)
     {
         if($template == '') {
@@ -79,7 +97,8 @@ class Menu implements \ArrayAccess
         foreach($this->items as $item) {
             $html[] = $item->renderWithTemplate($this->itemTemplate);
         }
-        return implode("\n", $html);
+        $html = implode("\n", $html);
+        return str_replace(':menu', $html, $this->menuTemplate);
     }
 
     public function offsetExists($offset)

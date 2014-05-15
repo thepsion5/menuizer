@@ -3,7 +3,9 @@ namespace Thepsion5\Menuizer;
 
 class HtmlGenerator
 {
-    protected $templates = array('default' => '<li><a href=":url" :attributes>:label</a></li>');
+    protected $templates = array(
+        'default' => '<li><a href=":url" :attributes>:label</a></li>'
+    );
 
     public function generateItemHtml($url, $label = '', array $attributeRules = array())
     {

@@ -53,6 +53,16 @@ class MenuItemFactory
         $attributes = array();
         foreach($parsedRules as $rule => $params)
         {
+            if($rule == '' && isset($params[0])) {
+                if($params[0][0] == '#') {
+                    $rule = 'url';
+                    $url = $params[0];
+                } elseif($params[0][0] == '/') {
+                    $url = $params[0];
+                    $rule = 'url';
+                }
+            }
+
             if(isset($this->urlRuleMap[$rule])) {
                 $url = $this->generator->generateUrlFromRule($this->urlRuleMap[$rule], $params);
             } elseif($rule == 'label') {
@@ -61,7 +71,9 @@ class MenuItemFactory
                 $attributes = $this->generateAttributesFromRule($rule, $params, $attributes);
             } elseif($this->generator->canUseNamedRoutes()) {
                 $routeParams = $params;
-                array_unshift($routeParams, $rule);
+                if($rule != '') {
+                    array_unshift($routeParams, $rule);
+                }
                 $routeUrl = $this->generator->generateUrlFromRule('route', $routeParams);
                 if($routeUrl) {
                     $url = $routeUrl;
@@ -78,8 +90,8 @@ class MenuItemFactory
         $parsedRules = array();
         $ruleStrings = explode('|', $ruleString);
         foreach($ruleStrings as $singleRule) {
-            $rule = str_splice(':', $singleRule);
-            $ruleParams = str_to_assoc_array(',', '=', $singleRule);
+            $rule = StringHelper::splice(':', $singleRule);
+            $ruleParams = StringHelper::toAssociativeArray($singleRule);
             if($rule == null && $singleRule[0] == '/') {
                 $rule = 'url';
             }
