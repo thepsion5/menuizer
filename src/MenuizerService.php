@@ -21,7 +21,7 @@ class MenuizerService
         return new static(new HtmlGenerator, $itemFactory, new MenuRepository);
     }
 
-    public function define($name, array $items)
+    public function define($name, array $items, $menuTemplate = '')
     {
         $menuItems = array();
         foreach($items as $item) {
@@ -31,24 +31,25 @@ class MenuizerService
                 $menuItems[] = $this->parser->makeFromRuleString($item);
             }
         }
-        return $this->repository->create($name, $menuItems);
+        $menu = $this->repository->create($name, $menuItems);
+        if($menuTemplate) {
+            $menu->setMenuTemplate($menuTemplate);
+        }
+        return $menu;
     }
 
-    public function menu($name, array $items = array())
+    public function menu($name, array $items = array(), $menuTemplate = '')
     {
         if(count($items) > 0) {
-            return $this->define($name, $items);
+            return $this->define($name, $items, $menuTemplate);
         } else {
             return $this->repository->get($name);
         }
     }
 
-    public function render($name, $template = '')
+    public function render($name, array $items = array(), $menuTemplate = '')
     {
-        $menu = $this->repository->get($name);
-        if($template) {
-            $menu->setItemTemplate($template);
-        }
+        $menu = $this->menu($name, $items, $menuTemplate);
         return $menu->render();
     }
 }

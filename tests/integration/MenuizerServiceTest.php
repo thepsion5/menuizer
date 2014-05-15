@@ -91,4 +91,22 @@ class MenuizerServiceTest extends \Thepsion5\Menuizer\Tests\IntegrationTestCase
     {
         $this->menuizer->menu('does_not_exist');
     }
+
+    /** @test */
+    public function it_renders_a_newly_defined_menu()
+    {
+        $renderedMenu = $this->menuizer->render('menu_name', array('#foo'));
+
+        $this->assertContains('href="#foo"', $renderedMenu);
+    }
+
+    /** @test */
+    public function it_renders_a_previously_defined_menu()
+    {
+        $this->menuizer->define('menu_name', array('#foo'));
+
+        $renderedMenu = $this->menuizer->render('menu_name');
+
+        $this->assertContains('href="#foo"', $renderedMenu);
+    }
 } 

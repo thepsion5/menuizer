@@ -11,7 +11,7 @@ class Menu implements \ArrayAccess
 
     protected $items = array();
 
-    protected $menuTemplate = '<ul>:menu</ul>';
+    protected $menuTemplate = ':menu';
 
     protected $itemTemplate = '<li><a href=":url" :attributes>:label</a></li>';
 
@@ -91,14 +91,15 @@ class Menu implements \ArrayAccess
         return $this->itemTemplate;
     }
 
-    public function render()
+    public function render($menuTemplate = '')
     {
+        $menuTemplate = $menuTemplate ?: $this->menuTemplate;
         $html = array();
         foreach($this->items as $item) {
             $html[] = $item->renderWithTemplate($this->itemTemplate);
         }
         $html = implode("\n", $html);
-        return str_replace(':menu', $html, $this->menuTemplate);
+        return str_replace(':menu', $html, $menuTemplate);
     }
 
     public function offsetExists($offset)
