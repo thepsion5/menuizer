@@ -1,6 +1,6 @@
 <?php
 
-namespace Thepsion5\Menuizer\Support\Testing;
+namespace Thepsion5\Menuizer\Tests\Support;
 
 use Thepsion5\Menuizer\MenuItem;
 

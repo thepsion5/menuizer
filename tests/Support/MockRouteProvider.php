@@ -1,14 +1,20 @@
 <?php
-namespace Thepsion5\Menuizer\Support\Testing;
+namespace Thepsion5\Menuizer\Tests\Support;
 
 use Thepsion5\Menuizer\RouteProviderInterface;
 
 class MockRouteProvider implements RouteProviderInterface
 {
 
-    public $format ='/url_for_%s%s';
+    public $format = '';
 
     public $routeExists = true;
+
+    public function __construct($urlFormat = '/url_for_%s%s', $routeExists = true)
+    {
+        $this->format = $urlFormat;
+        $this->routeExists = $routeExists;
+    }
 
     public function namedRouteExists($name)
     {
