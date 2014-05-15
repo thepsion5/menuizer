@@ -1,7 +1,9 @@
 <?php
+namespace Thepsion5\Menuizer\Tests\Unit;
+
 use Thepsion5\Menuizer\Menu;
 
-class MenuTest extends TestCase
+class MenuTest extends \Thepsion5\Menuizer\Tests\TestCase
 {
     public function setUp()
     {

@@ -1,13 +1,15 @@
 <?php
+namespace Thepsion5\Menuizer\Tests\Unit;
+
 use Thepsion5\Menuizer\MenuItemFactory;
 use Thepsion5\Menuizer\MenuItem;
-use Thepsion5\Menuizer\Support\Testing\MockRouteProvider;
+use Thepsion5\Menuizer\Tests\Support\MockRouteProvider;
 use Thepsion5\Menuizer\UrlGenerator;
 
 /**
  * @group MenuItemFactory
  */
-class MenuItemFactoryTest extends TestCase
+class MenuItemFactoryTest extends \Thepsion5\Menuizer\Tests\TestCase
 {
     /**
      * @var MenuItemFactory

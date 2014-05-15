@@ -1,21 +1,13 @@
 <?php
+namespace Thepsion5\Menuizer\Tests;
 
-use Thepsion5\Menuizer\Support\Testing\MenuizerTestFactory;
-
-class TestCase extends PHPUnit_Framework_TestCase
+class TestCase extends \PHPUnit_Framework_TestCase
 {
     protected $factory;
 
     public function __construct($name = null, array $data = array(), $dataName = '')
     {
         parent::__construct($name, $data, $dataName);
-        $this->factory = new MenuizerTestFactory;
+        $this->factory = new Support\MenuizerTestFactory;
     }
-
-    public function tearDown()
-    {
-        Mockery::close();
-    }
-
-
-} 
+}

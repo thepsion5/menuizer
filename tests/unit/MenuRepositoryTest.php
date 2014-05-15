@@ -1,8 +1,9 @@
 <?php
+namespace Thepsion5\Menuizer\Tests\Unit;
 
 use Thepsion5\Menuizer\MenuRepository;
 
-class MenuRepositoryTest extends TestCase
+class MenuRepositoryTest extends \Thepsion5\Menuizer\Tests\TestCase
 {
     protected $repo;
 
