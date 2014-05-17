@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Sean
- * Date: 5/14/14
- * Time: 11:21 AM
- */
 
 namespace Thepsion5\Menuizer\Tests\Unit;
 
@@ -45,6 +39,7 @@ class StringHelperTest extends \Thepsion5\Menuizer\Tests\TestCase
         $this->assertEquals('bar:baz', $test);
     }
 
+    /** @test */
     public function it_breaks_a_string_into_an_associative_array()
     {
         $testString = 'param1=value1,param2=value2,param3=value3';
@@ -72,4 +67,4 @@ class StringHelperTest extends \Thepsion5\Menuizer\Tests\TestCase
 
         $this->assertEquals($expected, $result);
     }
-} 
+}
