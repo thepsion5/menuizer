@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Sean
- * Date: 4/18/14
- * Time: 3:11 PM
- */
 
 namespace Thepsion5\Menuizer\Support\Laravel;
 
@@ -22,5 +16,16 @@ class LaravelRouteProvider implements RouteProviderInterface
     public function getNamedRoute($name, array $params = array())
     {
         return $this->urls->route($name, $params);
+    }
+
+    public function namedRouteExists($name)
+    {
+        $exists = true;
+        try {
+            $this->urls->route($name);
+        } catch(\InvalidArgumentException $e) {
+            $exists = false;
+        }
+        return $exists;
     }
 }
