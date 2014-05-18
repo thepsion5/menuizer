@@ -1,11 +1,12 @@
 <?php
 
-namespace Thepsion5\Menuizer;
+namespace Thepsion5\Menuizer\MenuRepository;
 
 
 use Thepsion5\Menuizer\Exceptions\MenuNotFoundException;
+use Thepsion5\Menuizer\Menu;
 
-class MenuRepository
+class MenuRepository implements MenuRepositoryInterface
 {
     protected $menus = array();
 
@@ -19,6 +20,11 @@ class MenuRepository
     public function exists($name)
     {
         return isset($this->menus[$name]);
+    }
+
+    public function save(Menu $menu)
+    {
+        $this->menus[$menu->getName()] = $menu;
     }
 
     public function get($name)

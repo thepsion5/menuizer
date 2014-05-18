@@ -1,7 +1,7 @@
 <?php
 namespace Thepsion5\Menuizer\Tests\Unit;
 
-use Thepsion5\Menuizer\MenuRepository;
+use Thepsion5\Menuizer\MenuRepository\MenuRepository;
 
 class MenuRepositoryTest extends \Thepsion5\Menuizer\Tests\TestCase
 {

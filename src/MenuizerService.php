@@ -1,6 +1,8 @@
 <?php
 namespace Thepsion5\Menuizer;
 
+use Thepsion5\Menuizer\MenuRepository\MenuRepository;
+
 class MenuizerService
 {
     public function __construct(
@@ -14,6 +16,10 @@ class MenuizerService
         $this->repository = $repository;
     }
 
+    /**
+     * @param RouteProviderInterface $routes
+     * @return static
+     */
     public static function create(RouteProviderInterface $routes = null)
     {
         $urlGenerator = new UrlGenerator($routes);
@@ -51,5 +57,10 @@ class MenuizerService
     {
         $menu = $this->menu($name, $items, $menuTemplate);
         return $menu->render();
+    }
+
+    public function getRepository()
+    {
+        return $this->repository;
     }
 }
