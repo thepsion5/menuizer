@@ -34,7 +34,7 @@ Menuizer provides a convenient factory method to create a new instance of the se
 ````php
 $menuizer = Thepsion5\Menuizer\MenuizerService::create();
 ````
-
+<a name="getting-started-laravel"></a>
 ###Laravel
 First, add Menuizer's service provider to the array of providers in `app/config/app.php`:
 
@@ -164,6 +164,38 @@ In addition to the basic syntax, there are also several shortcuts that allow you
 <a name="named-route-providers"></a>
 ###Named Route Providers
 
+Some frameworks provide for named routing functionality, where a particular url pattern is given an alias to a name
+to make the organization of routes easier. Menuizer can provides a means of integrating this functionality into its
+url generation.
+
+When using this package with [Laravel](#getting-started-laravel), this functionality is provided automatically. You
+can also enable this functionality by creating your own implementation of [RouteProviderInterface.php](/src/RouteProviderInterface.php).
+
+You may then pass an instance of your implementation into the `MenuizerService::create()` function:
+````php
+    $menuizer = Thepsion5\Menuizer\MenuizerService::create(new FooRouteProvider);
+````
+
+##Creating Menus and Menu Item Objects
+You may bypass the menuizer service class entirely to create menu instances using a more traditional OOP syntax:
+````php
+use Thepsion5\Menuizer\Menu;
+use Thepsion5\Menuizer\MenuItem;
+
+$items = array(
+    new Menu('/', 'Home', array('class' => 'nav', 'id' => 'home')),
+    new Menu('/about', 'About Us', array('class' => 'nav')),
+    new Menu('contact', 'Contact Us', array('class' => 'nav')
+);
+$menu = new Menu('foo', $items);
+````
+You can also save menu instances created outside the service class via the `getRepository()` method:
+````php
+$menuizer->getRepository()->save($menu);
+````
 <a name="todo"></a>
+
 ## Todo
-* Finish this readme
+* Implement a better default configuration system instead of using class variables
+* More features
+* More documentation
