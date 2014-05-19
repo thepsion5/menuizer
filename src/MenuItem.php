@@ -56,7 +56,7 @@ class MenuItem
     public function renderWithTemplate($template)
     {
         $search = array(':url', ':label', ':attributes');
-        $attributeString = array_to_html_attrs($this->attributes);
+        $attributeString = StringHelper::arrayToHtmlAttributeString($this->attributes);
         $replace = array($this->url, $this->label, $attributeString);
         return str_replace($search, $replace, $template);
     }
