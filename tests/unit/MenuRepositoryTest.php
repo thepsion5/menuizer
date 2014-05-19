@@ -5,6 +5,9 @@ use Thepsion5\Menuizer\MenuRepository\MenuRepository;
 
 class MenuRepositoryTest extends \Thepsion5\Menuizer\Tests\TestCase
 {
+    /**
+     * @var \Thepsion5\Menuizer\MenuRepository\MenuRepositoryInterface
+     */
     protected $repo;
 
     public function setUp()
@@ -39,10 +42,21 @@ class MenuRepositoryTest extends \Thepsion5\Menuizer\Tests\TestCase
 
     /**
      * @test
-     * @expectedException Thepsion5\Menuizer\Exceptions\MenuNotFoundException
+     * @expectedException \Thepsion5\Menuizer\Exceptions\MenuNotFoundException
      */
     public function it_throws_an_exception_when_retrieving_a_menu_that_does_not_exist()
     {
         $this->repo->get('not_there');
     }
-} 
+
+    /** @test */
+    public function it_successfully_saves_an_existing_menu_instance()
+    {
+        $savedMenu = $this->factory->menu(array('name' => 'test_menu'));
+
+        $this->repo->save($savedMenu);
+        $foundMenu = $this->repo->get('test_menu');
+
+        $this->assertEquals($savedMenu, $foundMenu);
+    }
+}

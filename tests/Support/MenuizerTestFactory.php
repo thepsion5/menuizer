@@ -2,6 +2,7 @@
 
 namespace Thepsion5\Menuizer\Tests\Support;
 
+use Thepsion5\Menuizer\Menu;
 use Thepsion5\Menuizer\MenuItem;
 
 class MenuizerTestFactory
@@ -10,11 +11,17 @@ class MenuizerTestFactory
 
     protected $blueprints = array(
         'MenuItem' => array(
-            'url' => '/',
-            'label' => 'Label',
-            'attributes' => array('class' => 'menu-item')
+            'url'           => '/',
+            'label'         => 'Label',
+            'attributes'    => array('class' => 'menu-item')
+        ),
+        'Menu' => array(
+            'name'          => 'test_menu',
+            'menuTemplate'  => ':menu',
+            'itemTemplate'  => '<a href=":url" :attributes>:label</a>'
         )
     );
+
 
     public function times($number)
     {
@@ -38,9 +45,30 @@ class MenuizerTestFactory
         return $items;
     }
 
+    public function menu(array $attributes = array(), $items = array())
+    {
+        $attributes = $this->mergeBlueprintAttributes('Menu', $attributes);
+        $menus = array();
+        if(count($items) < 1) {
+            $items = array(
+                $this->menuItem(array('url' => '/1', 'label' => 'Item 1')),
+                $this->menuItem(array('url' => '/2', 'label' => 'Item 2')),
+                $this->menuItem(array('url' => '/3', 'label' => 'Item 3'))
+            );
+        }
+        for($index = 0; $index < $this->itemsToProduce; $index++) {
+            $menus[] = new Menu($attributes['name'], $items, $attributes['itemTemplate'], $attributes['menuTemplate']);
+        }
+        $this->times(1);
+        if(count($menus) == 1) {
+            $menus = $menus[0];
+        }
+        return $menus;
+    }
+
     protected function mergeBlueprintAttributes($blueprint, array $attributes)
     {
         $defaults = $this->blueprints[$blueprint];
         return array_merge($defaults, $attributes);
     }
-} 
+}
