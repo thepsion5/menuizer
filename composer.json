@@ -1,6 +1,9 @@
 {
     "name": "thepsion5/menuizer",
-    "description": "",
+    "type": "library",
+    "description": "A package for conveniently creating and rendering menu templates",
+    "keywords": ["menu","menus", "laravel"],
+    "license": "MIT",
     "authors": [
         {
             "name": "Sean Mumford",
