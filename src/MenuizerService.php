@@ -1,19 +1,24 @@
 <?php
 namespace Thepsion5\Menuizer;
 
-use Thepsion5\Menuizer\MenuRepository\MenuRepository;
+use Thepsion5\Menuizer\ConfigRepository\ConfigRepository,
+    Thepsion5\Menuizer\ConfigRepository\ConfigRepositoryInterface,
+    Thepsion5\Menuizer\MenuRepository\MenuRepository,
+    Thepsion5\Menuizer\MenuRepository\MenuRepositoryInterface;
 
 class MenuizerService
 {
     public function __construct(
+        ConfigRepositoryInterface $config,
         HtmlGenerator $htmlGenerator,
         MenuItemFactory $parser,
-        MenuRepository $repository
+        MenuRepositoryInterface $repository
     )
     {
+        $this->setConfig($config);
         $this->htmlGenerator = $htmlGenerator;
         $this->parser = $parser;
-        $this->repository = $repository;
+        $this->setRepository($repository);
     }
 
     /**
@@ -24,7 +29,24 @@ class MenuizerService
     {
         $urlGenerator = new UrlGenerator($routes);
         $itemFactory = new MenuItemFactory($urlGenerator);
-        return new static(new HtmlGenerator, $itemFactory, new MenuRepository);
+        return new static(new ConfigRepository, new HtmlGenerator, $itemFactory, new MenuRepository);
+    }
+
+    /**
+     * Sets a configuration value if $value is not null, or retrieves the current value
+     * @param string $category  The category of the configuration field to set or retrieve
+     * @param string $key       The field to set or retrieve
+     * @param mixed|null $value The value to set, if supplied
+     * @return mixed
+     */
+    public function config($category, $key, $value = null)
+    {
+        if($value) {
+            $this->config->set($category, $key, $value);
+        } else {
+            $value = $this->config->get($category, $key);
+        }
+        return $value;
     }
 
     public function define($name, array $items, $menuTemplate = '')
@@ -62,5 +84,20 @@ class MenuizerService
     public function getRepository()
     {
         return $this->repository;
+    }
+
+    public function setRepository(MenuRepositoryInterface $repo)
+    {
+        $this->repository = $repo;
+    }
+
+    public function setConfig(ConfigRepositoryInterface $config)
+    {
+        $this->config = $config;
+    }
+
+    public function getConfig()
+    {
+        return $this->config;
     }
 }
