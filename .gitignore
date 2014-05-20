@@ -1,4 +1,5 @@
 /vendor
+/build/logs
 composer.phar
 .DS_Store
 .idea
