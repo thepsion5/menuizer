@@ -1,7 +1,8 @@
 # Menuizer
 
-![Build Status](https://travis-ci.org/thepsion5/menuizer.svg?branch=master)
+[![Build Status](https://travis-ci.org/thepsion5/menuizer.svg?branch=master)](https://travis-ci.org/thepsion5/menuizer.svg?branch=master)
 
+[![Coverage Status](https://coveralls.io/repos/thepsion5/menuizer/badge.png)](https://coveralls.io/r/thepsion5/menuizer)
 
 * [Installation](#installation)
 * [Getting Started](#getting-started)
